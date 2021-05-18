@@ -1,5 +1,10 @@
 # Version History
 
+## 1.1.0 / 2021-05-24
+
+- Add UoM column to data view (step 12)
+- Add summary columns to data view (step 13)
+
 ## 1.0.5 / 2021-05-07
 
 - Remove temporary workaround for Python 3.9 on internal Linux agent

@@ -16,6 +16,11 @@ SAMPLE_STREAM_ID_2 = 'dvTank100'
 SAMPLE_STREAM_NAME_2 = 'Tank100'
 SAMPLE_FIELD_TO_CONSOLIDATE_TO = 'temperature'
 SAMPLE_FIELD_TO_CONSOLIDATE = 'ambient_temp'
+SAMPLE_FIELD_TO_ADD_UOM_COLUMN_1 = "pressure"
+SAMPLE_FIELD_TO_ADD_UOM_COLUMN_2 = "temperature"
+SUMMARY_FIELD_ID = "pressure"
+SUMMARY_TYPE_1 = "mean"
+SUMMARY_TYPE_1 = "total"
 
 # Data View Information
 SAMPLE_DATAVIEW_ID = 'DataView_Sample'
@@ -214,6 +219,30 @@ def main(test=False):
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view data'
 
+        # Step 12
+        print()
+        print('Step 12: Add Units of Measure Column')
+        field1 = find_field_key(dataview_dataitem_fieldset.DataFields,
+                                FieldSource.PropertyId, SAMPLE_FIELD_TO_ADD_UOM_COLUMN_1)
+        field2 = find_field_key(dataview_dataitem_fieldset.DataFields,
+                                FieldSource.PropertyId, SAMPLE_FIELD_TO_ADD_UOM_COLUMN_2)
+        
+        field1.IncludeUom = True
+        field2.IncludeUom = True
+        ocs_client.DataViews.putDataView(namespace_id, dataview)
+
+        print('Retrieving data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataInterpolated(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view data'
+
+        # Step 13
+        print()
+        print('Step 13: Add Summaries Columns')
+
+
     except Exception as error:
         print((f'Encountered Error: {error}'))
         print()
@@ -227,9 +256,9 @@ def main(test=False):
         # Data View deletion
         #######################################################################
 
-        # Step 12
+        # Step 14
         print()
-        print('Step 12: Delete sample objects from OCS')
+        print('Step 14: Delete sample objects from OCS')
         print('Deleting data view...')
 
         suppress_error(lambda: ocs_client.DataViews.deleteDataView(
@@ -270,11 +299,9 @@ def create_data(namespace_id, ocs_client: OCSClient):
     double_type = SdsType('doubleType', SdsTypeCode.Double)
     datetime_type = SdsType('dateTimeType', SdsTypeCode.DateTime)
 
-    pressure_property = SdsTypeProperty('pressure', sds_type=double_type)
-    temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE_TO,
-                                           sds_type=double_type)
-    ambient_temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE,
-                                                   sds_type=double_type)
+    pressure_property = SdsTypeProperty(id='pressure', is_key=False, sds_type=double_type, uom="bar")
+    temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE_TO, False, double_type, uom="degree Celsius")
+    ambient_temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE, False, double_type, uom="degree Celsius")
     time_property = SdsTypeProperty('time', True, datetime_type)
 
     sds_type_1 = SdsType(

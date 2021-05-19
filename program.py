@@ -1,11 +1,10 @@
 """This sample script demonstrates how to invoke the Data View REST API"""
 
+from ocs_sample_library_preview import DataView, Field, FieldSource, OCSClient, Query, SdsStream, SdsType, SdsTypeCode, SdsTypeProperty, SummaryDirection, SdsSummaryType
 import configparser
 import datetime
 import random
 import traceback
-from ocs_sample_library_preview import (DataView, Field, FieldSource, OCSClient, Query, SdsStream,
-                                        SdsType, SdsTypeCode, SdsTypeProperty)
 
 # Sample Data Information
 SAMPLE_TYPE_ID_1 = 'Time_SampleType1'
@@ -19,8 +18,8 @@ SAMPLE_FIELD_TO_CONSOLIDATE = 'ambient_temp'
 SAMPLE_FIELD_TO_ADD_UOM_COLUMN_1 = "pressure"
 SAMPLE_FIELD_TO_ADD_UOM_COLUMN_2 = "temperature"
 SUMMARY_FIELD_ID = "pressure"
-SUMMARY_TYPE_1 = "mean"
-SUMMARY_TYPE_1 = "total"
+SUMMARY_TYPE_1 = "Mean"
+SUMMARY_TYPE_2 = "Total"
 
 # Data View Information
 SAMPLE_DATAVIEW_ID = 'DataView_Sample'
@@ -63,6 +62,24 @@ def find_field_key(fieldset_fields, field_source, key):
             return field
     return None
 
+def copy_field_key(fieldset_fields, field_source, key):
+    """Find a field by source and key, then return a copy of it"""
+    foundField = None
+
+    for field in fieldset_fields:
+        if field.Source == field_source and any(key in s for s in field.Keys):
+            foundField = field
+
+    if foundField == None:
+        return None
+
+    newField = Field(source=foundField.Source, keys=foundField.Keys, 
+                        stream_reference_names=foundField.StreamReferenceNames,
+                        label=foundField.Label, include_uom=foundField.IncludeUom, 
+                        summary_type=foundField.SummaryType, 
+                        summary_direction=foundField.SummaryDirection)
+    
+    return newField
 
 def main(test=False):
     """This function is the main body of the Data View sample script"""
@@ -241,7 +258,27 @@ def main(test=False):
         # Step 13
         print()
         print('Step 13: Add Summaries Columns')
+        field1 = copy_field_key(dataview_dataitem_fieldset.DataFields,
+                                FieldSource.PropertyId, SUMMARY_FIELD_ID)
+        field2 = copy_field_key(dataview_dataitem_fieldset.DataFields,
+                                FieldSource.PropertyId, SUMMARY_FIELD_ID)
+        
+        field1.SummaryDirection = SummaryDirection.Forward
+        field1.SummaryType = SdsSummaryType[SUMMARY_TYPE_1]
+        field2.SummaryDirection = SummaryDirection.Forward
+        field2.SummaryType = SdsSummaryType[SUMMARY_TYPE_2]
 
+        dataview_dataitem_fieldset.DataFields.append(field1)
+        dataview_dataitem_fieldset.DataFields.append(field2)
+        
+        ocs_client.DataViews.putDataView(namespace_id, dataview)
+
+        print('Retrieving data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataInterpolated(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view data'
 
     except Exception as error:
         print((f'Encountered Error: {error}'))

@@ -336,7 +336,7 @@ def create_data(namespace_id, ocs_client: OCSClient):
     double_type = SdsType('doubleType', SdsTypeCode.Double)
     datetime_type = SdsType('dateTimeType', SdsTypeCode.DateTime)
 
-    pressure_property = SdsTypeProperty(id='pressure', is_key=False, sds_type=double_type, uom="bar")
+    pressure_property = SdsTypeProperty('pressure', False, double_type, uom="bar")
     temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE_TO, False, double_type, uom="degree Celsius")
     ambient_temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE, False, double_type, uom="degree Celsius")
     time_property = SdsTypeProperty('time', True, datetime_type)

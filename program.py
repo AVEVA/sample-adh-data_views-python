@@ -5,6 +5,7 @@ import configparser
 import datetime
 import random
 import traceback
+import copy
 
 # Sample Data Information
 SAMPLE_TYPE_ID_1 = 'Time_SampleType1'
@@ -62,24 +63,6 @@ def find_field_key(fieldset_fields, field_source, key):
             return field
     return None
 
-def copy_field_key(fieldset_fields, field_source, key):
-    """Find a field by source and key, then return a copy of it"""
-    foundField = None
-
-    for field in fieldset_fields:
-        if field.Source == field_source and any(key in s for s in field.Keys):
-            foundField = field
-
-    if foundField == None:
-        return None
-
-    newField = Field(source=foundField.Source, keys=foundField.Keys, 
-                        stream_reference_names=foundField.StreamReferenceNames,
-                        label=foundField.Label, include_uom=foundField.IncludeUom, 
-                        summary_type=foundField.SummaryType, 
-                        summary_direction=foundField.SummaryDirection)
-    
-    return newField
 
 def main(test=False):
     """This function is the main body of the Data View sample script"""
@@ -258,11 +241,15 @@ def main(test=False):
         # Step 13
         print()
         print('Step 13: Add Summaries Columns')
-        field1 = copy_field_key(dataview_dataitem_fieldset.DataFields,
-                                FieldSource.PropertyId, SUMMARY_FIELD_ID)
-        field2 = copy_field_key(dataview_dataitem_fieldset.DataFields,
-                                FieldSource.PropertyId, SUMMARY_FIELD_ID)
+        # find the field for which we want to add a couple summary columns
+        ref_field = find_field_key(dataview_dataitem_fieldset.DataFields,
+                                FieldSource.PropertyId, SAMPLE_FIELD_TO_ADD_UOM_COLUMN_1)
         
+        # deep copy the field twice so we can change properties
+        field1 = copy.deepcopy(ref_field)
+        field2 = copy.deepcopy(ref_field)
+        
+        # set the summary properties and add the fields to the data fields array
         field1.SummaryDirection = SummaryDirection.Forward
         field1.SummaryType = SdsSummaryType[SUMMARY_TYPE_1]
         field2.SummaryDirection = SummaryDirection.Forward

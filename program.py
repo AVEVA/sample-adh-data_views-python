@@ -1,11 +1,12 @@
 """This sample script demonstrates how to invoke the Data View REST API"""
 
-from ocs_sample_library_preview import DataView, Field, FieldSource, OCSClient, Query, SdsStream, SdsType, SdsTypeCode, SdsTypeProperty, SummaryDirection, SdsSummaryType
 import configparser
+import copy
 import datetime
 import random
 import traceback
-import copy
+from ocs_sample_library_preview import (DataView, Field, FieldSource, OCSClient, Query, SdsStream, SdsType, 
+                                        SdsTypeCode, SdsTypeProperty, SummaryDirection, SdsSummaryType)
 
 # Sample Data Information
 SAMPLE_TYPE_ID_1 = 'Time_SampleType1'

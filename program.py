@@ -5,8 +5,9 @@ import copy
 import datetime
 import random
 import traceback
-from ocs_sample_library_preview import (DataView, Field, FieldSource, OCSClient, Query, SdsStream, SdsType, 
-                                        SdsTypeCode, SdsTypeProperty, SummaryDirection, SdsSummaryType)
+from ocs_sample_library_preview import (DataView, Field, FieldSource, OCSClient, Query,
+                                        SdsStream, SdsType, SdsTypeCode, 
+                                        SdsTypeProperty, SummaryDirection, SdsSummaryType)
 
 # Sample Data Information
 SAMPLE_TYPE_ID_1 = 'Time_SampleType1'
@@ -17,11 +18,11 @@ SAMPLE_STREAM_ID_2 = 'dvTank100'
 SAMPLE_STREAM_NAME_2 = 'Tank100'
 SAMPLE_FIELD_TO_CONSOLIDATE_TO = 'temperature'
 SAMPLE_FIELD_TO_CONSOLIDATE = 'ambient_temp'
-SAMPLE_FIELD_TO_ADD_UOM_COLUMN_1 = "pressure"
-SAMPLE_FIELD_TO_ADD_UOM_COLUMN_2 = "temperature"
-SUMMARY_FIELD_ID = "pressure"
-SUMMARY_TYPE_1 = "Mean"
-SUMMARY_TYPE_2 = "Total"
+SAMPLE_FIELD_TO_ADD_UOM_COLUMN_1 = 'pressure'
+SAMPLE_FIELD_TO_ADD_UOM_COLUMN_2 = 'temperature'
+SUMMARY_FIELD_ID = 'pressure'
+SUMMARY_TYPE_1 = 'Mean'
+SUMMARY_TYPE_2 = 'Total'
 
 # Data View Information
 SAMPLE_DATAVIEW_ID = 'DataView_Sample'
@@ -324,9 +325,11 @@ def create_data(namespace_id, ocs_client: OCSClient):
     double_type = SdsType('doubleType', SdsTypeCode.Double)
     datetime_type = SdsType('dateTimeType', SdsTypeCode.DateTime)
 
-    pressure_property = SdsTypeProperty('pressure', False, double_type, uom="bar")
-    temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE_TO, False, double_type, uom="degree Celsius")
-    ambient_temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE, False, double_type, uom="degree Celsius")
+    pressure_property = SdsTypeProperty('pressure', False, double_type, uom='bar')
+    temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE_TO, False,
+                                            double_type, uom='degree Celsius')
+    ambient_temperature_property = SdsTypeProperty(SAMPLE_FIELD_TO_CONSOLIDATE, False,
+                                            double_type, uom='degree Celsius')
     time_property = SdsTypeProperty('time', True, datetime_type)
 
     sds_type_1 = SdsType(

@@ -1,5 +1,9 @@
 # Version History
 
+## 1.1.1 / 2021-06-09
+
+- Updated dependencies
+
 ## 1.1.0 / 2021-05-26
 
 - Add UoM column to data view (step 12)

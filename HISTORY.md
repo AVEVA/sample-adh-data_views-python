@@ -3,6 +3,7 @@
 ## 1.1.3 / 2021-07-20
 
 - Cleaned up gitignore
+- Removed unnecessary supporting files
 
 ## 1.1.2 / 2021-07-15
 

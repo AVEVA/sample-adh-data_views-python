@@ -71,7 +71,7 @@ def main(test=False):
     exception = None
 
     config = configparser.ConfigParser()
-    config.read('config.ini')
+    config.read('test_config.ini')
 
     print('--------------------------------------------------------------------')
     print(' ######                      #    #                 ######  #     # ')
@@ -159,13 +159,21 @@ def main(test=False):
             namespace_id, SAMPLE_DATAVIEW_ID)
         print(available_fields.toJson())
 
-        print('Retrieving data from the data view:')
+        print('Retrieving interpolated data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         print(len(dataview_data))
-        assert len(dataview_data) > 0, 'Error getting data view data'
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time)
+        print(str(dataview_data))
+        print(len(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
 
         # Step 9
         print()
@@ -176,12 +184,19 @@ def main(test=False):
         # No DataView returned, success is 204
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
-        print('Retrieving data from the data view:')
+        print('Retrieving interpolated data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
-        assert len(dataview_data) > 0, 'Error getting data view data'
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
 
         # Step 10
         print()
@@ -193,12 +208,19 @@ def main(test=False):
         # No Data View returned, success is 204
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
-        print('Retrieving data from the data view:')
+        print('Retrieving interpolated data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
-        assert len(dataview_data) > 0, 'Error getting data view data'
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
 
         # Step 11
         print()
@@ -214,12 +236,19 @@ def main(test=False):
         # No Data View returned, success is 204
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
-        print('Retrieving data from the data view:')
+        print('Retrieving interpolated data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
-        assert len(dataview_data) > 0, 'Error getting data view data'
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
 
         # Step 12
         print()
@@ -233,12 +262,19 @@ def main(test=False):
         field2.IncludeUom = True
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
-        print('Retrieving data from the data view:')
+        print('Retrieving interpolated data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
-        assert len(dataview_data) > 0, 'Error getting data view data'
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
 
         # Step 13
         print()
@@ -262,12 +298,19 @@ def main(test=False):
         
         ocs_client.DataViews.putDataView(namespace_id, dataview)
 
-        print('Retrieving data from the data view:')
+        print('Retrieving interpolated data from the data view:')
         dataview_data = ocs_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
-        assert len(dataview_data) > 0, 'Error getting data view data'
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time)
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
 
     except Exception as error:
         print((f'Encountered Error: {error}'))

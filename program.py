@@ -71,7 +71,7 @@ def main(test=False):
     exception = None
 
     config = configparser.ConfigParser()
-    config.read('test_config.ini')
+    config.read('config.ini')
 
     print('--------------------------------------------------------------------')
     print(' ######                      #    #                 ######  #     # ')

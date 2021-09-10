@@ -1,5 +1,9 @@
 # Version History
 
+## 1.2.1 / 2021-09-07
+
+- Updated dependencies
+
 ## 1.2.0 / 2021-09-03
 
 - Added stored value data retrieval

@@ -312,6 +312,34 @@ def main(test=False):
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view stored data'
 
+        # Step 14
+        print()
+        print('Step 14: Iterate through pages of results')
+
+        print('Retrieving interpolated data from the data view with a page size of 2 rows:')
+        dataview_data, next_page, first_page = ocs_client.DataViews.getDataInterpolated(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, interval=SAMPLE_INTERVAL, count=2)
+
+        while next_page != None:
+            data_page, next_page, first_page = ocs_client.DataViews.getDataInterpolated(url=next_page)
+            dataview_data.extend(data_page)
+
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view interpolated data'
+
+        print('Retrieving stored data from the data view:')
+        dataview_data, next_page, first_page = ocs_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
+            end_index=sample_end_time, count=2)
+
+        while next_page != None:
+            data_page, next_page, first_page = ocs_client.DataViews.getDataInterpolated(url=next_page)
+            dataview_data.extend(data_page)
+
+        print(str(dataview_data))
+        assert len(dataview_data) > 0, 'Error getting data view stored data'
+
     except Exception as error:
         print((f'Encountered Error: {error}'))
         print()

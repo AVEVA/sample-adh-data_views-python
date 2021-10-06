@@ -1,6 +1,6 @@
 """This sample script demonstrates how to invoke the Data View REST API"""
 
-import configparser
+import json
 import copy
 import datetime
 import random
@@ -33,6 +33,23 @@ SAMPLE_QUERY_ID = 'stream'
 SAMPLE_QUERY_STRING = 'dvTank*'
 SAMPLE_INTERVAL = '00:20:00'
 
+
+def get_appsettings():
+    """Open and parse the appsettings.json file"""
+
+    # Try to open the configuration file
+    try:
+        with open(
+            'appsettings.json',
+            'r',
+        ) as f:
+            appsettings = json.load(f)
+    except Exception as error:
+        print(f'Error: {str(error)}')
+        print(f'Could not open/read appsettings.json')
+        exit()
+
+    return appsettings
 
 def suppress_error(sds_call):
     """Suppresses an error thrown by SDS"""
@@ -70,8 +87,7 @@ def main(test=False):
     """This function is the main body of the Data View sample script"""
     exception = None
 
-    config = configparser.ConfigParser()
-    config.read('config.ini')
+    appsettings = get_appsettings()
 
     print('--------------------------------------------------------------------')
     print(' ######                      #    #                 ######  #     # ')
@@ -86,13 +102,13 @@ def main(test=False):
     # Step 1
     print()
     print('Step 1: Authenticate against OCS')
-    ocs_client = OCSClient(config.get('Access', 'ApiVersion'),
-                           config.get('Access', 'Tenant'),
-                           config.get('Access', 'Resource'),
-                           config.get('Credentials', 'ClientId'),
-                           config.get('Credentials', 'ClientSecret'))
+    ocs_client = OCSClient(appsettings.get('ApiVersion'),
+                           appsettings.get('TenantId'),
+                           appsettings.get('Resource'),
+                           appsettings.get('ClientId'),
+                           appsettings.get('ClientSecret'))
 
-    namespace_id = config.get('Configurations', 'Namespace')
+    namespace_id = appsettings.get('NamespaceId')
 
     print(namespace_id)
     print(ocs_client.uri)

@@ -1,9 +1,14 @@
 # Version History
 
-## 1.2.2 / 2021-10-13
+## 1.3.1 / 2021-10-13
 
 - Update pipelines to use Azure Key Vault for secrets
 - Changed config.ini into an appsettings.json file
+
+## 1.3.0 / 2021-10-04
+
+- Added step 14 to demonstrate paged data retrieval
+- Updated dependencies
 
 ## 1.2.1 / 2021-09-07
 

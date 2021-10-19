@@ -1,5 +1,10 @@
 # Version History
 
+## 1.3.1 / 2021-10-20
+
+- Updated dependencies
+- Updated readme link
+
 ## 1.3.0 / 2021-10-04
 
 - Added step 14 to demonstrate paged data retrieval

@@ -1,9 +1,14 @@
 # Version History
 
-## 1.3.1 / 2021-10-20
+## 1.3.2 / 2021-10-20
 
 - Updated dependencies
 - Updated readme link
+
+## 1.3.1 / 2021-10-13
+
+- Update pipelines to use Azure Key Vault for secrets
+- Changed config.ini into an appsettings.json file
 
 ## 1.3.0 / 2021-10-04
 

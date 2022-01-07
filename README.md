@@ -8,7 +8,7 @@ The sample code in this demonstrates how to invoke the Data View REST API via th
 
 This example uses the ocs_sample_library_preview library which is also included in this github repo. It is downloadable via pip.
 
-Developed against Python 3.9.1.
+Developed against Python 3.9.5.
 
 ## Running the Sample
 
@@ -30,7 +30,7 @@ or
 
 ---
 
-Automated test uses Python 3.9.1 x64
+Automated test uses Python 3.9.5 x64
 
 For the main OCS data views samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS.md)  
 For the main OCS samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  

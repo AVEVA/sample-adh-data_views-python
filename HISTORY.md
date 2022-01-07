@@ -1,5 +1,9 @@
 # Version History
 
+## 1.4.0 / 2022-01-11
+
+- Added demonstration of verbosity header
+
 ## 1.3.2 / 2021-10-20
 
 - Updated dependencies

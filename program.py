@@ -358,6 +358,22 @@ def main(test=False):
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view stored data'
 
+        # Step 15
+        print()
+        print('Step 15: Demonstrate verbosity header usage')
+
+        print('Writing default values to the streams properties')
+
+        print('Retrieving these values in the data view with accept-verbosity set to non-verbose')
+
+        print('Enabling the non-verbose accept-verbosity set to verbose')
+        ocs_client.acceptverbosity = True
+
+        print('Retrieving these values in the data view with accept-verbosity set to verbose')
+
+        print('Setting the accept-verbosity back to the original value')
+        ocs_client.acceptverbosity = False
+
     except Exception as error:
         print((f'Encountered Error: {error}'))
         print()
@@ -371,9 +387,9 @@ def main(test=False):
         # Data View deletion
         #######################################################################
 
-        # Step 14
+        # Step 16
         print()
-        print('Step 14: Delete sample objects from OCS')
+        print('Step 16: Delete sample objects from OCS')
         print('Deleting data view...')
 
         suppress_error(lambda: ocs_client.DataViews.deleteDataView(

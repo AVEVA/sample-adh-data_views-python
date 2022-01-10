@@ -1,8 +1,8 @@
 # Version History
 
-## 1.4.0 / 2022-01-11
+## 1.4.0 / 2022-01-10
 
-- Added demonstration of verbosity header
+- Added step 15: demonstration of accept-verbosity: non-verbose header
 
 ## 1.3.2 / 2021-10-20
 

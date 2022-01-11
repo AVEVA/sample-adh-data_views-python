@@ -363,7 +363,7 @@ def main(test=False):
         print('Step 15: Demonstrate verbosity header usage')
 
         print('Writing default values to the streams properties')
-        # Keep the times in the future, guaranteeing now overlaps with existing data
+        # Keep the times in the future, guaranteeing no overlaps with existing data
         default_data_start_time = datetime.datetime.now() + datetime.timedelta(hours=1)
         default_data_end_time = default_data_start_time + datetime.timedelta(hours=1)
 

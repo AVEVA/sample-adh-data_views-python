@@ -4,6 +4,10 @@
 
 - Added step 15: demonstration of accept-verbosity: non-verbose header
 
+## 1.3.3 / 2021-12-07
+
+- Update pipelines to reference internal analysis templates
+
 ## 1.3.2 / 2021-10-20
 
 - Updated dependencies

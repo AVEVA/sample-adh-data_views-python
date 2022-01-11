@@ -362,14 +362,14 @@ def main(test=False):
         print()
         print('Step 15: Demonstrate verbosity header usage')
 
-        print('Writing default values to the streams properties')
+        print('Writing null values to the streams')
         # Keep the times in the future, guaranteeing no overlaps with existing data
-        default_data_start_time = datetime.datetime.now() + datetime.timedelta(hours=1)
-        default_data_end_time = default_data_start_time + datetime.timedelta(hours=1)
+        null_data_start_time = datetime.datetime.now() + datetime.timedelta(hours=1)
+        null_data_end_time = null_data_start_time + datetime.timedelta(hours=1)
 
         # The first value is only a pressure, keeping temperature as null. Vice versa for the second
-        values = [{"time": default_data_start_time.isoformat(timespec='seconds'), "pressure": 100},
-                  {"time": default_data_end_time.isoformat(timespec='seconds'), "temperature": 50}]
+        values = [{"time": null_data_start_time.isoformat(timespec='seconds'), "pressure": 100}, # temperature is null
+                  {"time": null_data_end_time.isoformat(timespec='seconds'), "temperature": 50}] # pressure is null
         ocs_client.Streams.insertValues(namespace_id, SAMPLE_STREAM_ID_1, json.dumps(values))
         ocs_client.Streams.insertValues(namespace_id, SAMPLE_STREAM_ID_2, json.dumps(values))
 
@@ -379,16 +379,16 @@ def main(test=False):
         print()
         print('Retrieving these values in the data view with the base client setting of accept-verbosity set to False will use accept-verbosity: non-verbose')
         dataview_data = ocs_client.DataViews.getDataStored(
-            namespace_id, SAMPLE_DATAVIEW_ID, start_index=default_data_start_time,
-            end_index=default_data_end_time)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time)
         print()
         print(str(dataview_data))
         print()
 
         print('The client\'s accept-verbosity setting can be overridden at the query level with the verbose parameter, returning verbose data view data')
         dataview_data = ocs_client.DataViews.getDataStored(
-            namespace_id, SAMPLE_DATAVIEW_ID, start_index=default_data_start_time,
-            end_index=default_data_end_time, verbose=True)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time, verbose=True)
         print()
         print(str(dataview_data))
         print()
@@ -397,16 +397,16 @@ def main(test=False):
         ocs_client.acceptverbosity = True
 
         dataview_data = ocs_client.DataViews.getDataStored(
-            namespace_id, SAMPLE_DATAVIEW_ID, start_index=default_data_start_time,
-            end_index=default_data_end_time)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time)
         print()
         print(str(dataview_data))
         print()
 
         print('A verbose client can also be overridden to show non-verbose data view output using the verbose parameter.')
         dataview_data = ocs_client.DataViews.getDataStored(
-            namespace_id, SAMPLE_DATAVIEW_ID, start_index=default_data_start_time,
-            end_index=default_data_end_time, verbose=False)
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time, verbose=False)
         print()
         print(str(dataview_data))
         print()

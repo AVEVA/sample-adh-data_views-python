@@ -102,7 +102,7 @@ def main(test=False):
     # Step 1
     print()
     print('Step 1: Authenticate against OCS')
-    ocs_client = OCSClient(appsettings.get('ApiVersion'),
+    adh_client = OCSClient(appsettings.get('ApiVersion'),
                            appsettings.get('TenantId'),
                            appsettings.get('Resource'),
                            appsettings.get('ClientId'),
@@ -111,14 +111,14 @@ def main(test=False):
     namespace_id = appsettings.get('NamespaceId')
 
     print(namespace_id)
-    print(ocs_client.uri)
+    print(adh_client.uri)
 
     try:
 
         # Step 2
         print()
         print('Step 2: Create types, streams, and data')
-        times = create_data(namespace_id, ocs_client)
+        times = create_data(namespace_id, adh_client)
         sample_start_time = times[0]
         sample_end_time = times[1]
 
@@ -127,12 +127,12 @@ def main(test=False):
         print('Step 3: Create a data view')
         dataview = DataView(SAMPLE_DATAVIEW_ID,
                             SAMPLE_DATAVIEW_NAME, SAMPLE_DATAVIEW_DESCRIPTION)
-        ocs_client.DataViews.postDataView(namespace_id, dataview)
+        adh_client.DataViews.postDataView(namespace_id, dataview)
 
         # Step 4
         print()
         print('Step 4: Retrieve the data view')
-        dataview = ocs_client.DataViews.getDataView(
+        dataview = adh_client.DataViews.getDataView(
             namespace_id, SAMPLE_DATAVIEW_ID)
         print(dataview.toJson())
 
@@ -142,25 +142,25 @@ def main(test=False):
         query = Query(SAMPLE_QUERY_ID, value=SAMPLE_QUERY_STRING)
         dataview.Queries = [query]
         # No Data View returned, success is 204
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         # Step 6
         print()
         print('Step 6: View items found by the query')
         print('List data items found by the query:')
-        data_items = ocs_client.DataViews.getResolvedDataItems(
+        data_items = adh_client.DataViews.getResolvedDataItems(
             namespace_id, SAMPLE_DATAVIEW_ID, SAMPLE_QUERY_ID)
         print(data_items.toJson())
 
         print('List ineligible data items found by the query:')
-        data_items = ocs_client.DataViews.getResolvedIneligibleDataItems(
+        data_items = adh_client.DataViews.getResolvedIneligibleDataItems(
             namespace_id, SAMPLE_DATAVIEW_ID, SAMPLE_QUERY_ID)
         print(data_items.toJson())
 
         # Step 7
         print()
         print('Step 7: View fields available to include in the data view')
-        available_fields = ocs_client.DataViews.getResolvedAvailableFieldSets(
+        available_fields = adh_client.DataViews.getResolvedAvailableFieldSets(
             namespace_id, SAMPLE_DATAVIEW_ID)
         print(available_fields.toJson())
 
@@ -168,15 +168,15 @@ def main(test=False):
         print()
         print('Step 8: Include some of the available fields')
         dataview.DataFieldSets = available_fields.Items
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         print('List available field sets:')
-        available_fields = ocs_client.DataViews.getResolvedAvailableFieldSets(
+        available_fields = adh_client.DataViews.getResolvedAvailableFieldSets(
             namespace_id, SAMPLE_DATAVIEW_ID)
         print(available_fields.toJson())
 
         print('Retrieving interpolated data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataInterpolated(
+        dataview_data = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
@@ -184,7 +184,7 @@ def main(test=False):
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataStored(
+        dataview_data = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time)
         print(str(dataview_data))
@@ -198,17 +198,17 @@ def main(test=False):
                          label='{DistinguisherValue} {FirstKey}')
         dataview.GroupingFields = [grouping]
         # No DataView returned, success is 204
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         print('Retrieving interpolated data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataInterpolated(
+        dataview_data = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataStored(
+        dataview_data = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time)
         print(str(dataview_data))
@@ -222,17 +222,17 @@ def main(test=False):
             dataview.DataFieldSets, SAMPLE_QUERY_ID)
         dataview_dataitem_fieldset.IdentifyingField = identify
         # No Data View returned, success is 204
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         print('Retrieving interpolated data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataInterpolated(
+        dataview_data = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataStored(
+        dataview_data = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time)
         print(str(dataview_data))
@@ -250,17 +250,17 @@ def main(test=False):
         field1.Keys.append(SAMPLE_FIELD_TO_CONSOLIDATE)
         dataview_dataitem_fieldset.DataFields.remove(field2)
         # No Data View returned, success is 204
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         print('Retrieving interpolated data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataInterpolated(
+        dataview_data = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataStored(
+        dataview_data = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time)
         print(str(dataview_data))
@@ -276,17 +276,17 @@ def main(test=False):
         
         field1.IncludeUom = True
         field2.IncludeUom = True
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         print('Retrieving interpolated data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataInterpolated(
+        dataview_data = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataStored(
+        dataview_data = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time)
         print(str(dataview_data))
@@ -312,17 +312,17 @@ def main(test=False):
         dataview_dataitem_fieldset.DataFields.append(field1)
         dataview_dataitem_fieldset.DataFields.append(field2)
         
-        ocs_client.DataViews.putDataView(namespace_id, dataview)
+        adh_client.DataViews.putDataView(namespace_id, dataview)
 
         print('Retrieving interpolated data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataInterpolated(
+        dataview_data = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL)
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view:')
-        dataview_data = ocs_client.DataViews.getDataStored(
+        dataview_data = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time)
         print(str(dataview_data))
@@ -333,26 +333,26 @@ def main(test=False):
         print('Step 14: Iterate through pages of results')
 
         print('Retrieving interpolated data from the data view with a page size of 2 rows to force paging:')
-        dataview_data, next_page, first_page = ocs_client.DataViews.getDataInterpolated(
+        dataview_data, next_page, first_page = adh_client.DataViews.getDataInterpolated(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, interval=SAMPLE_INTERVAL, count=2)
 
         # iterate through each subsequent page of results until there are no more pages
         while next_page != None:
-            data_page, next_page, first_page = ocs_client.DataViews.getDataInterpolated(url=next_page)
+            data_page, next_page, first_page = adh_client.DataViews.getDataInterpolated(url=next_page)
             dataview_data.extend(data_page)
 
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view interpolated data'
 
         print('Retrieving stored data from the data view with a page size of 2 rows to force paging:')
-        dataview_data, next_page, first_page = ocs_client.DataViews.getDataStored(
+        dataview_data, next_page, first_page = adh_client.DataViews.getDataStored(
             namespace_id, SAMPLE_DATAVIEW_ID, start_index=sample_start_time,
             end_index=sample_end_time, count=2)
 
         # iterate through each subsequent page of results until there are no more pages
         while next_page != None:
-            data_page, next_page, first_page = ocs_client.DataViews.getDataInterpolated(url=next_page)
+            data_page, next_page, first_page = adh_client.DataViews.getDataInterpolated(url=next_page)
             dataview_data.extend(data_page)
 
         print(str(dataview_data))
@@ -376,13 +376,13 @@ def main(test=False):
         print('Step 14: Delete sample objects from OCS')
         print('Deleting data view...')
 
-        suppress_error(lambda: ocs_client.DataViews.deleteDataView(
+        suppress_error(lambda: adh_client.DataViews.deleteDataView(
             namespace_id, SAMPLE_DATAVIEW_ID))
 
         # check, including assert is added to make sure we deleted it
         dataview = None
         try:
-            dataview = ocs_client.DataViews.getDataView(
+            dataview = adh_client.DataViews.getDataView(
                 namespace_id, SAMPLE_DATAVIEW_ID)
         except Exception as error:
             # Exception is expected here since Data View has been deleted
@@ -392,15 +392,15 @@ def main(test=False):
             print('Verification OK: Data View deleted')
 
         print('Deleting sample streams...')
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: adh_client.Streams.deleteStream(
             namespace_id, SAMPLE_STREAM_ID_1))
-        suppress_error(lambda: ocs_client.Streams.deleteStream(
+        suppress_error(lambda: adh_client.Streams.deleteStream(
             namespace_id, SAMPLE_STREAM_ID_2))
 
         print('Deleting sample types...')
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: adh_client.Types.deleteType(
             namespace_id, SAMPLE_TYPE_ID_1))
-        suppress_error(lambda: ocs_client.Types.deleteType(
+        suppress_error(lambda: adh_client.Types.deleteType(
             namespace_id, SAMPLE_TYPE_ID_2))
 
         if test and exception is not None:
@@ -408,7 +408,7 @@ def main(test=False):
     print('Complete!')
 
 
-def create_data(namespace_id, ocs_client: OCSClient):
+def create_data(namespace_id, adh_client: OCSClient):
     """Creates sample data for the script to use"""
 
     double_type = SdsType('doubleType', SdsTypeCode.Double)
@@ -434,8 +434,8 @@ def create_data(namespace_id, ocs_client: OCSClient):
                     'events for Data Views')
 
     print('Creating SDS Types...')
-    ocs_client.Types.getOrCreateType(namespace_id, sds_type_1)
-    ocs_client.Types.getOrCreateType(namespace_id, sds_type_2)
+    adh_client.Types.getOrCreateType(namespace_id, sds_type_1)
+    adh_client.Types.getOrCreateType(namespace_id, sds_type_2)
 
     stream1 = SdsStream(
         SAMPLE_STREAM_ID_1,
@@ -450,8 +450,8 @@ def create_data(namespace_id, ocs_client: OCSClient):
         'A Stream to store the sample Pressure events')
 
     print('Creating SDS Streams...')
-    ocs_client.Streams.createOrUpdateStream(namespace_id, stream1)
-    ocs_client.Streams.createOrUpdateStream(namespace_id, stream2)
+    adh_client.Streams.createOrUpdateStream(namespace_id, stream1)
+    adh_client.Streams.createOrUpdateStream(namespace_id, stream2)
 
     sample_start_time = datetime.datetime.now() - datetime.timedelta(hours=1)
     sample_end_time = datetime.datetime.now()
@@ -476,11 +476,11 @@ def create_data(namespace_id, ocs_client: OCSClient):
         values2.append(val2)
 
     print('Sending values...')
-    ocs_client.Streams.insertValues(
+    adh_client.Streams.insertValues(
         namespace_id,
         SAMPLE_STREAM_ID_1,
         str(values1).replace("'", ""))
-    ocs_client.Streams.insertValues(
+    adh_client.Streams.insertValues(
         namespace_id,
         SAMPLE_STREAM_ID_2,
         str(values2).replace("'", ""))

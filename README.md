@@ -1,4 +1,7 @@
-# Using the OCS Data View Service in Python
+# Using the ADH Data View Service in Python
+
+| :loudspeaker: **Notice**: Samples have been updated to reflect that they work on AVEVA Data Hub.  The samples also work on OSIsoft Cloud Services unless otherwise noted. |
+| -----------------------------------------------------------------------------------------------|  
 
 **Version:** 1.3.4
 
@@ -16,7 +19,7 @@ Developed against Python 3.9.1.
 1. Install required modules: `pip install -r requirements.txt`
 1. Open the folder with your favorite IDE
 1. The sample is configured using the file [appsettings.placeholder.json](appsettings.placeholder.json). Before editing, rename this file to `appsettings.json`. This repository's `.gitignore` rules should prevent the file from ever being checked in to any fork or branch, to ensure credentials are not compromised.
-1. Update `appsettings.json` with the credentials provided by OSIsoft
+1. Update `appsettings.json` with the credentials provided by AVEVA
 1. Run `program.py`
 
 To test the sample after running it:
@@ -32,6 +35,6 @@ or
 
 Automated test uses Python 3.9.1 x64
 
-For the main OCS data views samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS.md)  
-For the main OCS samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
-For the main OSIsoft samples page [ReadMe](https://github.com/osisoft/OSI-Samples)
+For the main ADH data views samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS.md)  
+For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  
+For the main AVEVA samples page [ReadMe](https://github.com/osisoft/OSI-Samples)

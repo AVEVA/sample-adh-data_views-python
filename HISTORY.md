@@ -1,5 +1,9 @@
 # Version History
 
+## 1.4.0 / 2022-01-27
+
+- Updated for AVEVA Data Hub
+
 ## 1.3.4 / 2022-01-17
 
 - Updated dependencies
@@ -78,7 +82,7 @@
 ## 1.0.0 / 2020-07-29
 
 - Add sample credentials file to gitignore and replace with placeholder
-- Increment to 1.x version now that Data Views is released in OCS
+- Increment to 1.x version now that Data Views is released in ADH
 
 ## 0.2.6 / 2020-07-24
 

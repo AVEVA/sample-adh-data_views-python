@@ -5,7 +5,7 @@ import copy
 import datetime
 import random
 import traceback
-from ocs_sample_library_preview import (DataView, Field, FieldSource, OCSClient, Query,
+from ocs_sample_library_preview import (DataView, Field, FieldSource, ADHClient, Query,
                                         SdsStream, SdsType, SdsTypeCode, 
                                         SdsTypeProperty, SummaryDirection, SdsSummaryType)
 
@@ -101,8 +101,8 @@ def main(test=False):
 
     # Step 1
     print()
-    print('Step 1: Authenticate against OCS')
-    adh_client = OCSClient(appsettings.get('ApiVersion'),
+    print('Step 1: Authenticate against ADH')
+    adh_client = ADHClient(appsettings.get('ApiVersion'),
                            appsettings.get('TenantId'),
                            appsettings.get('Resource'),
                            appsettings.get('ClientId'),
@@ -373,7 +373,7 @@ def main(test=False):
 
         # Step 14
         print()
-        print('Step 14: Delete sample objects from OCS')
+        print('Step 14: Delete sample objects from ADH')
         print('Deleting data view...')
 
         suppress_error(lambda: adh_client.DataViews.deleteDataView(
@@ -408,7 +408,7 @@ def main(test=False):
     print('Complete!')
 
 
-def create_data(namespace_id, adh_client: OCSClient):
+def create_data(namespace_id, adh_client: ADHClient):
     """Creates sample data for the script to use"""
 
     double_type = SdsType('doubleType', SdsTypeCode.Double)

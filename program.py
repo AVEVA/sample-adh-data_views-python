@@ -358,6 +358,63 @@ def main(test=False):
         print(str(dataview_data))
         assert len(dataview_data) > 0, 'Error getting data view stored data'
 
+        # Step 15
+        print()
+        print('Step 15: Demonstrate verbosity header usage')
+
+        print('Writing null values to the streams')
+        # Keep the times in the future, guaranteeing no overlaps with existing data
+        null_data_start_time = datetime.datetime.now() + datetime.timedelta(hours=1)
+        null_data_end_time = null_data_start_time + datetime.timedelta(hours=1)
+
+        # The first value is only a pressure, keeping temperature as null. Vice versa for the second
+        values = [{"time": null_data_start_time.isoformat(timespec='seconds'), "pressure": 100}, # temperature is null
+                  {"time": null_data_end_time.isoformat(timespec='seconds'), "temperature": 50}] # pressure is null
+        adh_client.Streams.insertValues(namespace_id, SAMPLE_STREAM_ID_1, json.dumps(values))
+        adh_client.Streams.insertValues(namespace_id, SAMPLE_STREAM_ID_2, json.dumps(values))
+
+        print()
+        print('Data View results will not include null values written to nullable properties if the accept-verbosity header is set to non-verbose.')
+        print('The values just written include nulls for one of the properties; note the presence or absense of these values in the following outputs:')
+        print()
+        print('Retrieving these values in the data view with the base client setting of accept-verbosity set to False will use accept-verbosity: non-verbose')
+        dataview_data = adh_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time)
+        print()
+        print(str(dataview_data))
+        print()
+
+        print('The client\'s accept-verbosity setting can be overridden at the query level with the verbose parameter, returning verbose data view data')
+        dataview_data = adh_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time, verbose=True)
+        print()
+        print(str(dataview_data))
+        print()
+
+        print('Alternatively, enabling the base client\'s accept-verbosity setting will also result in verbose data view output, but is a client-wide setting')
+        adh_client.acceptverbosity = True
+
+        dataview_data = adh_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time)
+        print()
+        print(str(dataview_data))
+        print()
+
+        print('A verbose client can also be overridden to show non-verbose data view output using the verbose parameter.')
+        dataview_data = adh_client.DataViews.getDataStored(
+            namespace_id, SAMPLE_DATAVIEW_ID, start_index=null_data_start_time,
+            end_index=null_data_end_time, verbose=False)
+        print()
+        print(str(dataview_data))
+        print()
+
+        print()
+        print('Setting the accept-verbosity back to the original value')
+        adh_client.acceptverbosity = False
+
     except Exception as error:
         print((f'Encountered Error: {error}'))
         print()
@@ -371,9 +428,9 @@ def main(test=False):
         # Data View deletion
         #######################################################################
 
-        # Step 14
+        # Step 16
         print()
-        print('Step 14: Delete sample objects from ADH')
+        print('Step 16: Delete sample objects from OCS')
         print('Deleting data view...')
 
         suppress_error(lambda: adh_client.DataViews.deleteDataView(
@@ -411,7 +468,7 @@ def main(test=False):
 def create_data(namespace_id, adh_client: ADHClient):
     """Creates sample data for the script to use"""
 
-    double_type = SdsType('doubleType', SdsTypeCode.Double)
+    double_type = SdsType('doubleType', SdsTypeCode.NullableDouble)
     datetime_type = SdsType('dateTimeType', SdsTypeCode.DateTime)
 
     pressure_property = SdsTypeProperty('pressure', False, double_type, uom='bar')

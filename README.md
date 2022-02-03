@@ -3,7 +3,7 @@
 | :loudspeaker: **Notice**: Samples have been updated to reflect that they work on AVEVA Data Hub.  The samples also work on OSIsoft Cloud Services unless otherwise noted. |
 | -----------------------------------------------------------------------------------------------|  
 
-**Version:** 1.4.0
+**Version:** 1.5.0
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-data_views-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&branchName=main)
 
@@ -11,7 +11,7 @@ The sample code in this demonstrates how to invoke the Data View REST API via th
 
 This example uses the ocs_sample_library_preview library which is also included in this github repo. It is downloadable via pip.
 
-Developed against Python 3.9.1.
+Developed against Python 3.9.5.
 
 ## Running the Sample
 
@@ -33,7 +33,7 @@ or
 
 ---
 
-Automated test uses Python 3.9.1 x64
+Automated test uses Python 3.9.5 x64
 
 For the main ADH data views samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS/blob/main/docs/DATA_VIEWS.md)  
 For the main ADH samples page [ReadMe](https://github.com/osisoft/OSI-Samples-OCS)  

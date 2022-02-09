@@ -1,5 +1,9 @@
 # Version History
 
+## 1.5.0 / 2022-01-27
+
+- Updated for AVEVA Data Hub
+
 ## 1.4.0 / 2022-01-26
 
 - Added step 15: demonstration of accept-verbosity: non-verbose header

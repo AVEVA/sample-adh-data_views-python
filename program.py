@@ -5,7 +5,7 @@ import copy
 import datetime
 import random
 import traceback
-from ocs_sample_library_preview import (DataView, Field, FieldSource, ADHClient, Query,
+from adh-sample-library-preview import (DataView, Field, FieldSource, ADHClient, Query,
                                         SdsStream, SdsType, SdsTypeCode, 
                                         SdsTypeProperty, SummaryDirection, SdsSummaryType)
 

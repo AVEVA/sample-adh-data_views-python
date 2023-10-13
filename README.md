@@ -1,6 +1,6 @@
 # Using the ADH Data View Service in Python
 
-**Version:** 1.5.5
+**Version:** 1.5.6
 
 [![Build Status](https://dev.azure.com/osieng/engineering/_apis/build/status/product-readiness/ADH/aveva.sample-adh-data_views-python?branchName=main)](https://dev.azure.com/osieng/engineering/_build/latest?definitionId=2618&branchName=main)
 
